@@ -27,10 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.letroso.R
 
-@Preview
 @Composable
 fun Header(
-    //voltar: () -> Unit
+    voltar: () -> Unit
 ){
     Box(
         modifier = Modifier.fillMaxWidth()

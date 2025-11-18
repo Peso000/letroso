@@ -2,16 +2,24 @@ package com.example.letroso.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,19 +29,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.letroso.data.local.Palavra
 import com.example.letroso.ui.components.Header
 import com.example.letroso.viewmodel.JogoDiarioVM
 
-@Preview
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun telaJogoDiario(
-    /*viewModel: JogoDiarioVM,
-    voltar: () -> Unit*/
+    viewModel: JogoDiarioVM,
+    voltar: () -> Unit
 ){
+    LaunchedEffect(Unit) {
+        viewModel.fetchWord()
+    }
+
+    val randomWord by viewModel.randomWord.collectAsState()
+
     Scaffold(
         topBar = {
-            Header()
+            Header(voltar = voltar)
         }
     ){  paddingValues ->
         Box(
@@ -43,15 +58,32 @@ fun telaJogoDiario(
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                var texto by remember { mutableStateOf("") }
-
                 Spacer(Modifier.height(100.dp))
-                TextField(
-                    value = texto,
-                    onValueChange = { texto = it },
-                    label = {Text("Teste")},
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    var texto by remember { mutableStateOf("") }
+                    val words = viewModel.word.collectAsState().value
+                    //val randomWord by viewModel.randomWord.collectAsState()
+
+
+
+                    TextField(
+                        value = texto,
+                        onValueChange = { texto = it },
+                        label = {Text("Teste")}
+                    )
+
+                    Text(
+                        randomWord?.word ?: "Nada",
+                        color = Color.White
+                    )
+
+
+                    //Button() { }
+
+                }
             }
         }
     }

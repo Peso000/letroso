@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.letroso.ui.screens.telaJogoDiario
 import com.example.letroso.ui.theme.LetrosoTheme
+import com.example.letroso.viewmodel.JogoDiarioVM
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,12 +31,17 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun navigation (){
     val navController = rememberNavController()
+    val jogoDiarioVM: JogoDiarioVM = androidx.lifecycle.viewmodel.compose.viewModel()
 
     NavHost(
         navController = navController,
         startDestination = "home"
     ){
-        composable("home") { telaJogoDiario() }
+        composable("home") {
+            telaJogoDiario(jogoDiarioVM,
+                voltar = { navController.popBackStack() }
+            )
+        }
     }
 }
 
