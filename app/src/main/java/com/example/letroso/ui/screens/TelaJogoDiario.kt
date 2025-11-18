@@ -44,7 +44,7 @@ fun telaJogoDiario(
         viewModel.fetchWord()
     }
 
-    //val randomWord by viewModel.randomWord.collectAsState()
+
     val state by viewModel.uiState.collectAsState()
 
     Scaffold(
@@ -65,8 +65,8 @@ fun telaJogoDiario(
                     horizontalArrangement = Arrangement.Center
                 ){
                     var texto by remember { mutableStateOf("") }
-                    val words =  state.words //viewModel.word.collectAsState().value
-                    val randomWord = state.randomWord //viewModel.randomWord.collectAsState()
+                    val words =  state.words
+                    val randomWord = state.randomWord
 
 
 
