@@ -24,15 +24,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.letroso.data.repository.UserRepository
+import com.example.letroso.ui.factorys.CadastroUsuarioVMFactory
+import com.example.letroso.ui.factorys.LoginVMFactory
+import com.example.letroso.viewmodel.CadastroUsuarioVM
 import com.example.letroso.viewmodel.LoginVM
 
 @Composable
 fun TelaCadastroUsuario(
 
 ){
+    val contex = LocalContext.current
+    val database = AppDatabase.getInstance(context = contex)
+    val userRepository = remember { UserRepository(database.userDao()) }
+    val vm : CadastroUsuarioVM = viewModel(
+        factory = CadastroUsuarioVMFactory(userRepository = userRepository)
+    )
+
     // Estados para os campos
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -57,7 +70,6 @@ fun TelaCadastroUsuario(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Nome
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
@@ -71,7 +83,6 @@ fun TelaCadastroUsuario(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Email
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -86,7 +97,6 @@ fun TelaCadastroUsuario(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Senha
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -101,20 +111,16 @@ fun TelaCadastroUsuario(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Botão salvar
             Button(
                 onClick = {
                     if (name.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
-                        userViewModel.insertUser(name, email, password)
+                        vm.insertUser(name, email, password)
                         name = ""
                         email = ""
                         password = ""
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF2563EB) // Azul
-                )
             ) {
                 Text(text = "Salvar", color = Color.White)
             }

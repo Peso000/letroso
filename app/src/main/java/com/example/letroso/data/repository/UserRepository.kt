@@ -5,6 +5,7 @@ import com.example.letroso.data.local.UserEntity
 import com.example.letroso.data.logic.models.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 
 class UserRepository( private val userDao: UserDao ) {
     fun login(email: String, pass: String): UserEntity?{
@@ -23,5 +24,9 @@ class UserRepository( private val userDao: UserDao ) {
 
     fun insertUser(user: UserEntity){
         userDao.insertUser(user)
+    }
+
+    suspend fun getAllUsersSortedByPoints(): List<UserEntity> {
+        return getAllUsers().first().sortedByDescending { it.pontuation }
     }
 }

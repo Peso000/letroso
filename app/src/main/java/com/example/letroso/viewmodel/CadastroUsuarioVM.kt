@@ -27,6 +27,5 @@ class CadastroUsuarioVM(
         )
 
         repository.insertUser(newUser)
-
     }
 }
