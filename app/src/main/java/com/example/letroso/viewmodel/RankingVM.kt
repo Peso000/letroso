@@ -5,15 +5,6 @@ import com.example.letroso.ui.state.LoginUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class LoginVM: ViewModel() {
-    private val _uiState = MutableStateFlow(LoginUiState())
-    val uiState = _uiState.asStateFlow()
+class RankingVM: ViewModel() {
 
-    fun validaUser(){
-
-    }
-
-    fun mostraErro( erro:String ){
-
-    }
 }

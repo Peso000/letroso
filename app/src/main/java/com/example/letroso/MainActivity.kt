@@ -14,6 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.letroso.di.AppModule
+import com.example.letroso.ui.screens.TelaCadastroUsuario
+import com.example.letroso.ui.screens.TelaLogin
 import com.example.letroso.ui.screens.telaJogoDiario
 import com.example.letroso.ui.theme.LetrosoTheme
 import com.example.letroso.viewmodel.JogoDiarioVM
@@ -22,6 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        AppModule.init(applicationContext)
         setContent {
             navigation()
         }
@@ -38,10 +42,21 @@ fun navigation (){
         startDestination = "home"
     ){
         composable("home") {
-            telaJogoDiario(jogoDiarioVM,
+            telaJogoDiario(
                 voltar = { navController.popBackStack() }
             )
         }
+
+        /*composable("login") {
+            TelaLogin(
+                irParaCadastro = { navController.navigate("cadastro") },
+                irParaJogo = { navController.navigate("home") }
+            )
+        }
+
+        composable("cadastro") {
+            TelaCadastroUsuario()
+        }*/
     }
 }
 

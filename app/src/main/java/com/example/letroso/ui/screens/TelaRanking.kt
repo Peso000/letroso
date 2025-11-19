@@ -33,59 +33,10 @@ import com.example.letroso.data.local.Palavra
 import com.example.letroso.ui.components.Header
 import com.example.letroso.viewmodel.JogoDiarioVM
 
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
 @Composable
-fun telaJogoDiario(
-    viewModel: JogoDiarioVM,
-    voltar: () -> Unit
+fun TelaRanking(
+
 ){
-    LaunchedEffect(Unit) {
-        viewModel.fetchWord()
-    }
 
-
-    val state by viewModel.uiState.collectAsState()
-
-    Scaffold(
-        topBar = {
-            Header(voltar = voltar)
-        }
-    ){  paddingValues ->
-        Box(
-            modifier = Modifier.fillMaxSize()
-                .background(Color(15,23,42))
-        ){
-            Column(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Spacer(Modifier.height(100.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ){
-                    var texto by remember { mutableStateOf("") }
-                    val words =  state.words
-                    val randomWord = state.randomWord
-
-
-
-                    TextField(
-                        value = texto,
-                        onValueChange = { texto = it },
-                        label = {Text("Teste")}
-                    )
-
-                    Text(
-                        randomWord?.word ?: "Nada",
-                        color = Color.White
-                    )
-
-
-                    //Button() { }
-
-                }
-            }
-        }
-    }
 }

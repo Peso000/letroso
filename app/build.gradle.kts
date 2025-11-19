@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -64,6 +65,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
     val room_version = "2.6.1"
 

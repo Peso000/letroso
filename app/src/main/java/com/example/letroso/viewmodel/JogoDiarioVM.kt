@@ -20,12 +20,19 @@ class JogoDiarioVM : ViewModel() {
 
     fun fetchWord() {
         viewModelScope.launch {
+            _uiState.update { it.copy( loading = true ) }
 
             try {
                 val response = RetrofitInstance.api.getWords()
+
                 if (response.isSuccessful) {
                     val list = response.body() ?: emptyList()
-                    _uiState.update { it.copy( words = list, randomWord = list.random() ) }
+                    _uiState.update { it.copy(
+                        words = list,
+                        randomWord = list.random(),
+                        loading = false
+                        )
+                    }
                 } else {
                     println("Erro: ${response.code()}")
                 }

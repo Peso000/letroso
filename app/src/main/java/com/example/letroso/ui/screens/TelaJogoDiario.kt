@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.letroso.data.local.Palavra
 import com.example.letroso.ui.components.Header
 import com.example.letroso.viewmodel.JogoDiarioVM
@@ -37,9 +38,10 @@ import com.example.letroso.viewmodel.JogoDiarioVM
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun telaJogoDiario(
-    viewModel: JogoDiarioVM,
+//    viewModel: JogoDiarioVM,
     voltar: () -> Unit
 ){
+    val viewModel: JogoDiarioVM = viewModel()
     LaunchedEffect(Unit) {
         viewModel.fetchWord()
     }
@@ -60,21 +62,34 @@ fun telaJogoDiario(
                 modifier = Modifier.fillMaxSize()
             ) {
                 Spacer(Modifier.height(100.dp))
+                if(state.loading == true){
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Carregando palavra...",
+                            color = Color.White
+                        )
+                    }
+                    Spacer(Modifier.height(100.dp))
+                }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ){
-                    var texto by remember { mutableStateOf("") }
+                    var textoInput by remember { mutableStateOf("") }
                     val words =  state.words
                     val randomWord = state.randomWord
 
 
 
                     TextField(
-                        value = texto,
-                        onValueChange = { texto = it },
+                        value = textoInput,
+                        onValueChange = { textoInput = it },
                         label = {Text("Teste")}
                     )
+
 
                     Text(
                         randomWord?.word ?: "Nada",
