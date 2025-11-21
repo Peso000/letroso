@@ -29,7 +29,7 @@ import com.example.letroso.R
 
 @Composable
 fun Header(
-    voltar: () -> Unit
+//    voltar: () -> Unit
 ){
     Box(
         modifier = Modifier.fillMaxWidth()

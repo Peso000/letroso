@@ -9,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,11 +19,15 @@ import com.example.letroso.ui.components.Header
 import com.example.letroso.ui.factorys.RankingVMFactory
 import com.example.letroso.viewmodel.RankingVM
 
+@Preview
 @Composable
 fun TelaRanking(
-    userRepository: UserRepository,
-    voltar: () -> Unit
+//    userRepository: UserRepository,
+//    voltar: () -> Unit
 ) {
+    val context = LocalContext.current
+    val db = AppDatabase.getDatabase(context = context)
+    val userRepository = UserRepository(db.userDao())
     val rankingVM: RankingVM = viewModel(
         factory = RankingVMFactory(userRepository)
     )
@@ -29,7 +35,7 @@ fun TelaRanking(
 
     Scaffold(
         topBar = {
-            Header(voltar = voltar)
+            Header(/*voltar = voltar*/)
         }
     ) { paddingValues ->
         Box(

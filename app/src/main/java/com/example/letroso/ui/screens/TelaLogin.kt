@@ -33,13 +33,14 @@ import com.example.letroso.data.repository.UserRepository
 import com.example.letroso.ui.factorys.LoginVMFactory
 import com.example.letroso.viewmodel.LoginVM
 
+@Preview
 @Composable
 fun TelaLogin(
-    irParaCadastro: () -> Unit,
-    irParaJogo: () -> Unit
+//    irParaCadastro: () -> Unit,
+//    irParaJogo: () -> Unit
 ){
     val contex = LocalContext.current
-    val database = AppDatabase.getInstance(context = contex)
+    val database = AppDatabase.getDatabase(context = contex)
     val userRepository = remember { UserRepository(database.userDao()) }
     val loginVM : LoginVM = viewModel(
         factory = LoginVMFactory(userRepository = userRepository)
@@ -97,14 +98,14 @@ fun TelaLogin(
                     Text("Entrar")
                 }
                 Spacer( modifier = Modifier.width(15.dp))
-                Button( onClick = { irParaCadastro() } ) {
+                Button( onClick = {/* irParaCadastro() */} ) {
                     Text("Cadastrar")
                 }
             }
 
             LaunchedEffect(state.loginSucess) {
                 if(state.loginSucess){
-                    irParaJogo()
+//                    irParaJogo()
                 }
             }
         }

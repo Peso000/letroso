@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 
 class UserRepository( private val userDao: UserDao ) {
-    fun login(email: String, pass: String): UserEntity?{
+    suspend fun login(email: String, pass: String): UserEntity?{
         val user = userDao.getUser(email, pass)
 
         return if(user == null) {
@@ -29,4 +29,13 @@ class UserRepository( private val userDao: UserDao ) {
     suspend fun getAllUsersSortedByPoints(): List<UserEntity> {
         return getAllUsers().first().sortedByDescending { it.pontuation }
     }
+
+    suspend fun deleteUser(user: UserEntity) {
+        userDao.deleteUser(user)
+    }
+
+    suspend fun updateUser(user: UserEntity) {
+        userDao.updateUser(user)
+    }
+
 }

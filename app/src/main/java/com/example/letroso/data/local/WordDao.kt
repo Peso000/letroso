@@ -12,6 +12,6 @@ interface WordDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(word: WordEntity)
 
-    @Query("SELECT * FROM WordEntity ORDER BY id DESC")
+    @Query("SELECT * FROM Palavras ORDER BY id DESC")
     fun getAllWords(): Flow<List<WordEntity>>
 }

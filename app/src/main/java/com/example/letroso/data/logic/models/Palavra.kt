@@ -1,4 +1,4 @@
-package com.example.letroso.data.local
+package com.example.letroso.data.logic.models
 
 data class Palavra(
     val word: String,
